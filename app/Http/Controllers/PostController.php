@@ -14,7 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::paginate();
+
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -35,7 +37,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'published' => 'required',
+            'image' => 'required|image'
+        ]);
+
+        Post::create([
+            'title' => $request->title,
+            'sort_order' => Post::max('sort_order') + 1,
+            'description' => $request->description,
+            'published' => $request->published,
+            'image' => $request->file('image')->store('images'),
+        ]);
+
+        return redirect('/posts');
     }
 
     /**
