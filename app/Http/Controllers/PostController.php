@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -40,16 +47,15 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'published' => 'required',
-            'image' => 'required|image'
+            'image_path' => 'required|image'
         ]);
 
         Post::create([
             'title' => $request->title,
-            'sort_order' => Post::max('sort_order') + 1,
+            'sort_order' => Post::max('sort_order') + 1 ,
             'description' => $request->description,
-            'published' => $request->published,
-            'image' => $request->file('image')->store('images'),
+            'published' => $request->published ? true : false,
+            'image_path' => $request->file('image_path')->store('images', 'public')
         ]);
 
         return redirect('/posts');

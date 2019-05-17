@@ -14,31 +14,52 @@ class PostTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
+    public function only_admin_can_create_posts()
+    {
+        $user = factory('App\User')->make();
+
+        $this->actingAs($user)->post('/posts')->assertStatus(403);
+    }
+
+    /** @test */
+    public function valid_image_is_required()
+    {
+
+        $this->actingAs($this->admin());
+
+        $this->post('/posts', [
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'published' => $this->faker->randomElement(['0', '1']) ,
+            'image' => 'not a file'
+        ])->assertStatus(422);
+        
+    }
+
+    /** @test */
     public function admin_can_create_posts()
     {
         $this->withoutExceptionHandling();
 
         $this->actingAs($this->admin());
 
-        Storage::fake('images');
-
-        $file = UploadedFile::fake()->image('image.jpg');
+        Storage::fake('public');
 
         $attributes = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'published' => $this->faker->randomElement(['0', '1']) ,
-            'image' => $file
+            'image_path' => $file = UploadedFile::fake()->image('image.jpg')
         ];
 
         $this->post('/posts', $attributes)->assertRedirect('/posts');
 
-        $this->assertDatabaseHas('posts', Arr::except($attributes, ['image']));
+        $this->assertDatabaseHas('posts', Arr::except($attributes, ['image_path']));
 
         $this->get('posts')->assertSee($attributes['title']);
 
-        Storage::disk('images')->assertExists($file);
+        Storage::disk('public')->assertExists('images/'. $file->hashName());
 
-        //Storage::disk('images')->assertMissing('missing.jpg');
+        Storage::disk('public')->assertMissing('missing.jpg');
     }
 }

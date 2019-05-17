@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->integer('sort_order')->unsigned();
             $table->text('description');
             $table->boolean('published');
-            $table->string('image');
+            $table->string('image_path');
             $table->timestamps();
         });
     }
