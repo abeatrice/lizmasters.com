@@ -15,17 +15,21 @@
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th>Title</th>
-                <th>Descrtion</th>
+                <th>Description</th>
                 <th>Published</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($posts as $post)
                 <tr>
+                    <td>
+                        <a href="/posts/{{$post->id}}/edit">edit</a>
+                    </td>
                     <td>{{$post->title}}</td>
                     <td>{{$post->description}}</td>
-                    <td>{{$post->published}}</td>
+                    <td>{{$post->published ? 'Yes' : 'No' }}</td>
                 </tr>
             @endforeach
         </tbody>

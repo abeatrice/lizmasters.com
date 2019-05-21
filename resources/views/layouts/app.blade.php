@@ -23,7 +23,7 @@
     @yield('styles')
 
 </head>
-<body>
+<body style="background-color: #f0f0f0;">
     <div id="app">
 
         @auth
