@@ -92,7 +92,6 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //validate
         $request->validate([
             'title' => 'required',
             'description' => 'required',

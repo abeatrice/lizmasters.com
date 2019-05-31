@@ -27,19 +27,19 @@ class PostTest extends TestCase
 
         $this->actingAs($this->admin());
 
-        $this->post('/posts', [
+        $response = $this->post('/posts', [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'published' => $this->faker->randomElement(['0', '1']) ,
-            'image' => 'not a file'
-        ])->assertStatus(422);
+            'image_path' => 'notafile.jpg'
+        ]);
         
+        $response->assertSessionHasErrors(['image_path']);
+
     }
 
     /** @test */
     public function admin_can_create_posts()
     {
-        $this->withoutExceptionHandling();
 
         $this->actingAs($this->admin());
 
@@ -48,7 +48,7 @@ class PostTest extends TestCase
         $attributes = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'published' => $this->faker->randomElement(['0', '1']) ,
+            'published' => $this->faker->randomElement(['0', '1']),
             'image_path' => $file = UploadedFile::fake()->image('image.jpg')
         ];
 
