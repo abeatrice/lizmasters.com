@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Post;
 use Illuminate\Support\Arr;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -61,5 +62,27 @@ class PostTest extends TestCase
         Storage::disk('public')->assertExists('images/'. $file->hashName());
 
         Storage::disk('public')->assertMissing('missing.jpg');
+    }
+
+    /** @test */
+    public function admin_can_edit_posts()
+    {
+
+        $this->actingAs($this->admin());
+
+        $post = factory(Post::class)->create();
+
+        $attributes = [
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'published' => $this->faker->randomElement(['0', '1'])
+        ];
+
+        $this->put("/posts/{$post->id}", $attributes)->assertRedirect('/posts');
+
+        $this->assertDatabaseHas('posts', $attributes);
+
+        $this->get('posts')->assertSee($attributes['title']);
+
     }
 }
