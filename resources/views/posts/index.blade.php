@@ -15,7 +15,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th></th>
+                <th colspan="2"></th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Published</th>
@@ -26,6 +26,13 @@
                 <tr>
                     <td>
                         <a href="/posts/{{$post->id}}/edit">edit</a>
+                    </td>
+                    <td>
+                        <form action="{{$post->path()}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" value="delete" class="btn btn-link">
+                        </form>
                     </td>
                     <td>{{$post->title}}</td>
                     <td>{{$post->description}}</td>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -62,17 +63,6 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Post  $post
@@ -114,6 +104,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        dump(is_file('/storage/public/images/2a9lfS22Xwqdo6Po1wV6qbZss2S5deXu4jrrHBCw.png'));
+        dump(Storage::delete('/storage/public/images/2a9lfS22Xwqdo6Po1wV6qbZss2S5deXu4jrrHBCw.png'));
+        dump($post->image_path);
+        dd($post);
+        $post->delete();
+
+        return redirect('/posts');        
     }
 }

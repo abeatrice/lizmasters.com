@@ -25,7 +25,6 @@ class PostTest extends TestCase
     /** @test */
     public function valid_image_is_required()
     {
-
         $this->actingAs($this->admin());
 
         $response = $this->post('/posts', [
@@ -35,13 +34,11 @@ class PostTest extends TestCase
         ]);
         
         $response->assertSessionHasErrors(['image_path']);
-
     }
 
     /** @test */
     public function admin_can_create_posts()
     {
-
         $this->actingAs($this->admin());
 
         Storage::fake('public');
@@ -67,7 +64,6 @@ class PostTest extends TestCase
     /** @test */
     public function admin_can_edit_posts()
     {
-
         $this->actingAs($this->admin());
 
         $post = factory(Post::class)->create();
@@ -78,11 +74,24 @@ class PostTest extends TestCase
             'published' => $this->faker->randomElement(['0', '1'])
         ];
 
-        $this->put("/posts/{$post->id}", $attributes)->assertRedirect('/posts');
+        $this->put($post->path(), $attributes)->assertRedirect('/posts');
 
         $this->assertDatabaseHas('posts', $attributes);
 
         $this->get('posts')->assertSee($attributes['title']);
+    }
 
+    /** @test */
+    public function admin_can_delete_post()
+    {
+        $this->actingAs($this->admin());
+
+        $post = factory(Post::class)->create();
+
+        $this->assertDatabaseHas('posts', $post->toArray());
+
+        $this->delete($post->path())->assertRedirect('/posts');
+
+        $this->assertDatabaseMissing('posts', $post->toArray());
     }
 }
