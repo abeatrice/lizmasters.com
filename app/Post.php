@@ -12,4 +12,14 @@ class Post extends Model
     {
         return "/posts/{$this->id}";
     }
+
+    public function storagePath()
+    {
+        return "storage/{$this->image_path}";
+    }
+
+    public function deleteImage()
+    {
+        if(is_file($this->storagePath())) unlink($this->storagePath());
+    }
 }
