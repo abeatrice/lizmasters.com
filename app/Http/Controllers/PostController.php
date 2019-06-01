@@ -104,10 +104,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        dump(is_file('/storage/public/images/2a9lfS22Xwqdo6Po1wV6qbZss2S5deXu4jrrHBCw.png'));
-        dump(Storage::delete('/storage/public/images/2a9lfS22Xwqdo6Po1wV6qbZss2S5deXu4jrrHBCw.png'));
-        dump($post->image_path);
-        dd($post);
+            
+        //if(is_file($post->image_path)) 
+        Storage::delete($post->image_path);
+
         $post->delete();
 
         return redirect('/posts');        
