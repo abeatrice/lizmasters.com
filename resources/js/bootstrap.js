@@ -1,5 +1,5 @@
 //window._ = require('lodash');
-window.icons = require('material-icons');
+//window.icons = require('material-icons');
 
 try {
     window.Popper = require('popper.js').default;

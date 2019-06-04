@@ -15,7 +15,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th colspan="2"></th>
+                <th colspan="2" width="10%"></th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Published</th>
@@ -25,21 +25,21 @@
             @foreach ($posts as $post)
                 <tr>
                     <td>
-                        <a href="#" class="text-info" title="Edit Post" data-toggle="modal" data-target="#editModal" data-id="{{$post->id}}" data-title="{{$post->title}}" data-description="{{$post->description}}">
-                            <i class="material-icons">edit</i>
+                        <a href="#" class="text-info" title="Edit Post" 
+                            data-toggle="modal" data-target="#editModal" data-id="{{$post->id}}" 
+                            data-title="{{$post->title}}" data-description="{{$post->description}}"
+                            data-published="{{$post->published}}" data-image="{{$post->storagePath()}}">
+                                <i class="material-icons">edit</i>
                         </a>
-                        {{-- <a href="/posts/{{$post->id}}/edit"><i class="material-icons">edit</i></a> --}}
                     </td>
                     <td>
-                        <a href="#" class="text-danger"><i class="material-icons">delete</i></a>
+                        <a href="#" class="text-danger" title="Delete Post" 
+                            data-toggle="modal" data-target="#deleteModal" data-id="{{$post->id}}" 
+                            data-title="{{$post->title}}" data-description="{{$post->description}}"
+                            data-published="{{$post->published}}" data-image="{{$post->storagePath()}}">
+                                <i class="material-icons">delete</i>
+                        </a>
                     </td>
-                    {{-- <td>
-                        <form action="{{$post->path()}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" value="delete" class="btn btn-link">
-                        </form>
-                    </td> --}}
                     <td>{{$post->title}}</td>
                     <td>{{$post->description}}</td>
                     <td>{{$post->published ? 'Yes' : 'No' }}</td>
@@ -51,5 +51,11 @@
 
 @include('partials.posts.addModal')
 @include('partials.posts.editModal')
+@include('partials.posts.deleteModal')
 
+@endsection
+
+@section('js')
+    <script src="{{ asset('js/posts/editModal.js') }}"></script>
+    <script src="{{ asset('js/posts/deleteModal.js') }}"></script>
 @endsection
