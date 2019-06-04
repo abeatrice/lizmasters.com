@@ -101,9 +101,28 @@ class PostController extends Controller
         return redirect('/posts');        
     }
 
+    /** 
+     * Change sort order of a post with the one above or below it 
+     * 
+     * @param  \App\Post  $post
+     * @param  string  $direction
+     * @return \Illuminate\Http\Response
+    */
     public function changeSortOrder(Post $post, $direction)
     {
-        $direction == 'up' ? $post->increment('sort_order') : $post->decrement('sort_order');
+        $highestPost = Post::where('sort_order', Post::max('sort_order'))->first();
+        if($direction == 'up' and $post == $highestPost) return redirect('posts');
+
+        $lowestPost = Post::where('sort_order', Post::min('sort_order'))->first();
+        if($direction == 'down' and $post == $lowestPost) return redirect('posts');
+
+        if($direction == 'up') {
+            Post::where('sort_order', $post->sort_order + 1)->decrement('sort_order');
+            $post->increment('sort_order');
+        } else {
+            Post::where('sort_order', $post->sort_order - 1)->increment('sort_order');
+            $post->decrement('sort_order');
+        }
 
         return redirect('posts');
     }

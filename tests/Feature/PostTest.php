@@ -104,4 +104,88 @@ class PostTest extends TestCase
 
         $this->assertDatabaseMissing('posts', $post->toArray());
     }
+
+    /** @test */
+    public function admin_can_change_post_sort_order_up()
+    {
+        $this->actingAs($this->admin());
+
+        $post1 = factory(Post::class)->create();
+        $post2 = factory(Post::class)->create();
+
+        $this->post("/posts/{$post1->id}/order/up")->assertRedirect('/posts');
+
+        $this->assertDatabaseHas('posts', [
+            'title' => $post1->title,
+            'sort_order' => $post1->sort_order + 1,
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'title' => $post2->title,
+            'sort_order' => $post2->sort_order - 1,
+        ]);
+    }
+
+    /** @test */
+    public function admin_can_change_post_sort_order_down()
+    {
+        $this->actingAs($this->admin());
+
+        $post1 = factory(Post::class)->create();
+        $post2 = factory(Post::class)->create();
+
+        $this->post("/posts/{$post2->id}/order/down")->assertRedirect('/posts');
+
+        $this->assertDatabaseHas('posts', [
+            'title' => $post2->title,
+            'sort_order' => $post2->sort_order - 1,
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'title' => $post1->title,
+            'sort_order' => $post1->sort_order + 1,
+        ]);
+    }
+
+    /** @test */
+    public function max_sort_order_moved_up_has_no_change()
+    {
+        $this->actingAs($this->admin());
+
+        $post1 = factory(Post::class)->create();
+        $post2 = factory(Post::class)->create();
+
+        $this->post("/posts/{$post2->id}/order/up")->assertRedirect('/posts');
+        
+        $this->assertDatabaseHas('posts', [
+            'title' => $post1->title,
+            'sort_order' => $post1->sort_order,
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'title' => $post2->title,
+            'sort_order' => $post2->sort_order,
+        ]);
+    }
+
+    /** @test */
+    public function min_sort_order_moved_down_has_no_change()
+    {
+        $this->actingAs($this->admin());
+
+        $post1 = factory(Post::class)->create();
+        $post2 = factory(Post::class)->create();
+
+        $this->post("/posts/{$post1->id}/order/down")->assertRedirect('/posts');
+        
+        $this->assertDatabaseHas('posts', [
+            'title' => $post1->title,
+            'sort_order' => $post1->sort_order,
+        ]);
+
+        $this->assertDatabaseHas('posts', [
+            'title' => $post2->title,
+            'sort_order' => $post2->sort_order,
+        ]);
+    }
 }
