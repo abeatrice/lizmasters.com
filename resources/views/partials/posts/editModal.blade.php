@@ -23,7 +23,7 @@
                         <input type="checkbox" class="form-check-input" id="editPublished" name="published">
                         <label class="form-check-label" for="editPublished">Published</label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group d-flex justify-content-center">
                         <img id="editImage" src="" height="400" width="400">
                     </div>
                     <a href="/posts" class="btn btn-secondary">Cancel</a>

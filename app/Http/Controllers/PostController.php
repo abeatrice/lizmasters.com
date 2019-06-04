@@ -22,7 +22,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate();
+        $posts = Post::orderBy('sort_order', 'desc')->paginate();
 
         return view('posts.index', compact('posts'));
     }
@@ -99,5 +99,12 @@ class PostController extends Controller
         $post->delete();
 
         return redirect('/posts');        
+    }
+
+    public function changeSortOrder(Post $post, $direction)
+    {
+        $direction == 'up' ? $post->increment('sort_order') : $post->decrement('sort_order');
+
+        return redirect('posts');
     }
 }

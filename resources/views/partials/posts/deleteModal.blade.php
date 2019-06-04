@@ -13,17 +13,17 @@
                     @method('DELETE')
                     <div class="form-group">
                         <label for="editTitle">Title</label>
-                        <input class="form-control" id="deleteTitle" type="text" name="title" value="" required>
+                        <input class="form-control" id="deleteTitle" type="text" name="title" value="" readonly>
                     </div>
                     <div class="form-group">
                         <label for="deleteDescription">Description</label>
-                        <textarea class="form-control" name="description" id="deleteDescription" cols="150" rows="3" required></textarea>
+                        <textarea class="form-control" name="description" id="deleteDescription" cols="150" rows="3" readonly></textarea>
                     </div>
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="deletePublished" name="published">
+                        <input type="checkbox" class="form-check-input" id="deletePublished" name="published" disabled>
                         <label class="form-check-label" for="deletePublished">Published</label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group d-flex justify-content-center">
                         <img id="deleteImage" src="" height="400" width="400">
                     </div>
                     <a href="/posts" class="btn btn-secondary">Cancel</a>
