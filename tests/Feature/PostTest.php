@@ -52,11 +52,21 @@ class PostTest extends TestCase
 
         $this->post('/posts', $attributes)->assertRedirect('/posts');
 
-        $this->assertDatabaseHas('posts', Arr::except($attributes, ['image_path']));
+        $storageLocation = 'images/' . $file->hashName();
+
+        $this->assertDatabaseHas('posts', 
+            collect($attributes)->map(function ($attribute, $key) use($storageLocation) {
+                
+                if($key == 'image_path') return $storageLocation;
+
+                return $attribute;
+
+            })->toArray()
+        );
 
         $this->get('posts')->assertSee($attributes['title']);
 
-        Storage::disk('public')->assertExists('images/'. $file->hashName());
+        Storage::disk('public')->assertExists($storageLocation);
 
         Storage::disk('public')->assertMissing('missing.jpg');
     }
