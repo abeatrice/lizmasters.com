@@ -2,7 +2,6 @@ $(function() {
     $('#deleteModal').on('show.bs.modal', function (event) {
 
         var button = $(event.relatedTarget);
-        console.log(button.data('published'));
         
         $('#deleteTitle').val(button.data('title'));
         $('#deleteDescription').val(button.data('description'));

@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $posts = App\Post::orderBy('sort_order', 'desc')->paginate();
+    return view('welcome', compact('posts'));
 });
 
 Auth::routes();

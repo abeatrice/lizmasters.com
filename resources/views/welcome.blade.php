@@ -11,36 +11,53 @@
             <h5 class="text-muted">
                 <small>character design, creature design, emojis, enamel pins, illustration, stickers</small>
             </h5>
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <img src="/storage/images/social/mail.png" alt="Mail" height="20" width="20">
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="https://twitter.com/LizMasters">
-                        <img src="/storage/images/social/twitter.png" alt="Twitter" height="20" width="20">
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="https://www.instagram.com/lizmastersart/">
-                        <img src="/storage/images/social/instagram.png" alt="Instagram" height="20" width="20">
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="https://www.etsy.com/shop/lizziempress">
-                        <img src="/storage/images/social/etsy logo.png" alt="Etsy" height="20" width="20">
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="https://dribbble.com/LizMasters">
-                        <img src="/storage/images/social/dribbble.png" alt="Dribble" height="20" width="20">
-                    </a>
-                </li>   
-                
-            </ul>
+            @include('partials.social')
         </div>
     </div>
     <hr>
+
+    <div class="row">
+        @foreach ($posts as $post)
+            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mb-4">
+                <a href="#" data-toggle="modal" data-target="#imageModal" 
+                    data-path="{{$post->storagePath()}}" data-title="{{$post->title}}" data-description="{{$post->description}}">
+                        <img src="{{$post->storagePath()}}" class="card-img-top" alt="{{$post->title}}">
+                </a>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="d-flex flex-column">
+                <h1 class="modal-title d-flex justify-content-center">
+                    <span class="badge badge-pill badge-light" id="modalTitle"></span>
+                </h1>
+                <img id="modalImage" src="" class="card-img-top my-2">
+                <p class="d-flex justify-content-center">
+                    <small>
+                        <span class="badge badge-pill badge-light text-muted" id="modalDescription"></span>
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {{$posts->links()}}
+
 </div>
 @endsection
+
+@section('js')
+<script>
+    $(function() {
+        $('#imageModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            $('#modalImage').attr("src", button.data('path'));
+            $('#modalTitle').html(button.data('title'));
+            $('#modalDescription').html(button.data('description'));
+        });
+    });
+</script>
+@endsection
+
