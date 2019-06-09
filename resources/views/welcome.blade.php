@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('style')
+    <style>
+        .trans-background {
+            background-color: rgba(245, 245, 245, .8);
+        }
+    </style>    
+@endsection
+
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-center">
@@ -29,14 +37,14 @@
 
     <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="d-flex flex-column">
+            <div class="d-flex flex-column trans-background py-1 px-3 rounded" style="width: 32rem;">
                 <h1 class="modal-title d-flex justify-content-center">
-                    <span class="badge badge-pill badge-light" id="modalTitle"></span>
+                    <span class="text-center px-5" id="modalTitle"></span>
                 </h1>
                 <img id="modalImage" src="" class="card-img-top my-2">
-                <p class="d-flex justify-content-center">
+                <p class="d-flex justify-content-center text-center px-5">
                     <small>
-                        <span class="badge badge-pill badge-light text-muted" id="modalDescription"></span>
+                        <span class="" id="modalDescription"></span>
                     </small>
                 </p>
             </div>
