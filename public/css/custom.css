@@ -3,3 +3,7 @@ i {
     vertical-align: middle;
     padding-bottom: 3px;
 }
+
+.trans-white-background {
+    background-color: rgba(245, 245, 245, .8);
+}

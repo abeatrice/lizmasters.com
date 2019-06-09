@@ -1,6 +1,6 @@
 <ul class="nav justify-content-center">
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#emailModal">
             <img src="/storage/images/social/mail.png" alt="Mail" height="20" width="20">
         </a>
     </li>

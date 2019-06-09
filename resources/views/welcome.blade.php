@@ -1,13 +1,5 @@
 @extends('layouts.app')
 
-@section('style')
-    <style>
-        .trans-background {
-            background-color: rgba(245, 245, 245, .8);
-        }
-    </style>    
-@endsection
-
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-center">
@@ -27,7 +19,7 @@
     <div class="row">
         @foreach ($posts as $post)
             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mb-4">
-                <a href="#" data-toggle="modal" data-target="#imageModal" 
+                <a href="#" data-toggle="modal" data-target="#imageModal"
                     data-path="{{$post->storagePath()}}" data-title="{{$post->title}}" data-description="{{$post->description}}">
                         <img src="{{$post->storagePath()}}" class="card-img-top" alt="{{$post->title}}">
                 </a>
@@ -35,37 +27,48 @@
         @endforeach
     </div>
 
-    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModal" aria-hidden="true">
+    @include('partials.imageModal')
+
+    <div class="modal fade trans-white-background" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="d-flex flex-column trans-background py-1 px-3 rounded" style="width: 32rem;">
-                <h1 class="modal-title d-flex justify-content-center">
-                    <span class="text-center px-5" id="modalTitle"></span>
-                </h1>
-                <img id="modalImage" src="" class="card-img-top my-2">
-                <p class="d-flex justify-content-center text-center px-5">
-                    <small>
-                        <span class="" id="modalDescription"></span>
-                    </small>
-                </p>
+            <div class="modal-content trans-white-background p-5">
+                <form action="/email" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="emailName">Your Name:</label>
+                        <input type="text" name="name" class="form-control" id="emailName" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailAddress">Reply Email:</label>
+                        <input type="email" name="email" class="form-control" id="emailAddresss" placeholder="John@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailSubject">Subject:</label>
+                        <input type="text" name="subject" class="form-control" id="emailSubject" placeholder="I Love Your Pins!" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailMessage">Your Message:</label>
+                        <textarea name="message" class="form-control" id="emailMessage" rows="10" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-block">Send Message</button>
+                    <button type="submit" class="btn btn-outline-secondary btn-block" id="cancelSendEmail" data-dismiss="modal">Cancel</button>
+                </form>
             </div>
         </div>
     </div>
 
     {{$posts->links()}}
 
+    <hr>
+
+    <div class="d-flex-justify-content-center">
+        <p class="text-muted text-center"><small>Copyright © {{date('Y')}} Liz Masters</small></p>
+    </div>
+
 </div>
 @endsection
 
 @section('js')
-<script>
-    $(function() {
-        $('#imageModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget);
-            $('#modalImage').attr("src", button.data('path'));
-            $('#modalTitle').html(button.data('title'));
-            $('#modalDescription').html(button.data('description'));
-        });
-    });
-</script>
+    <script src="{{ asset('js/imageModal.js') }}"></script>
 @endsection
 
