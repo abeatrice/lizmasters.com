@@ -11,6 +11,9 @@ PROD:
     npm install
     npm run production
     php artisan storage:link
+    cp .env.example .env
+
+    //update env, include mailgun domain & key
 
     //create user
     lizmasters.com/register
