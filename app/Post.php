@@ -13,6 +13,16 @@ class Post extends Model
         return "/posts/{$this->id}";
     }
 
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
+
+    public function scopeDescending($query)
+    {
+        return $query->orderBy('sort_order', 'desc');
+    }
+
     public function storagePath()
     {
         return "storage/{$this->image_path}";
