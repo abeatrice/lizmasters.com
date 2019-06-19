@@ -37,9 +37,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function admin()
+    public function firstAdmin()
     {
-        return self::where('admin', true)->get()->first();
+        return $this->where('admin', true)->get()->first();
     }
 
     public function isAdmin()

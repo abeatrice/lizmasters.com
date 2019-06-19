@@ -18,7 +18,7 @@ class PostTest extends TestCase
     public function only_admin_can_create_posts()
     {
         $user = factory('App\User')->make();
-
+        
         $this->actingAs($user)->post('/posts')->assertStatus(403);
     }
 

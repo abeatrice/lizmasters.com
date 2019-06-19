@@ -16,7 +16,7 @@ class ContactUsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
         $request->validate([
             'name' => 'required',
@@ -26,7 +26,7 @@ class ContactUsController extends Controller
         ]);    
 
 
-        Mail::to(User::admin())->send(new ContactUs());
+        Mail::to($user->firstAdmin())->send(new ContactUs());
 
         return back()->with('status', 'Message Delivered!');    
     }
