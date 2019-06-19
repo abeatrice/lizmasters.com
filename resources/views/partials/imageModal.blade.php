@@ -1,6 +1,6 @@
-<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModal" aria-hidden="true">
+<div class="modal fade trans-white-background" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="d-flex flex-column trans-white-background py-1 px-3 rounded" style="width: 32rem;">
+        <div class="modal-content trans-white-background p-5">
             <h1 class="modal-title d-flex justify-content-center">
                 <span class="text-center px-5" id="modalTitle"></span>
             </h1>

@@ -1,15 +1,15 @@
 <div class="modal fade trans-white-background" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content trans-white-background p-5">
-            <form action="/email" method="POST" id="emailForm">
+            <form action="/contact-us" method="POST" id="emailForm">
                 @csrf
                 <div class="form-group">
                     <label for="emailName">Your Name:</label>
-                    <input type="text" name="name" class="form-control" id="emailName" placeholder="John Doe" required>
+                    <input type="text" name="name" class="form-control" id="emailName" placeholder="Jane Doe" required>
                 </div>
                 <div class="form-group">
                     <label for="emailAddress">Reply Email:</label>
-                    <input type="email" name="email" class="form-control" id="emailAddresss" placeholder="John@example.com" required>
+                    <input type="email" name="email" class="form-control" id="emailAddresss" placeholder="Jane@example.com" required>
                 </div>
                 <div class="form-group">
                     <label for="emailSubject">Subject:</label>
