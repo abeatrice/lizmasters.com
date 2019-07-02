@@ -10,6 +10,16 @@ i {
 
 .flash-message {
     position: fixed;
-    top: 50px;
-    right: 50px;
+    top: 100px;
+    right: 0px;
+    opacity: 0;
+    animation-name: fade-in-fade-out;
+    animation-duration: 6s;
+}
+
+@keyframes fade-in-fade-out {
+    0% { right: 0px; opacity: 0; }
+    15% { right: 80px; opacity: 1; }
+    85% { right: 80px; opacity: 1; }
+    100% { right: 0; opacity: 0; }
 }
