@@ -7,3 +7,9 @@ i {
 .trans-white-background {
     background-color: rgba(245, 245, 245, .9);
 }
+
+.flash-message {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+}

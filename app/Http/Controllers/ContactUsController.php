@@ -24,10 +24,9 @@ class ContactUsController extends Controller
             'subject' => 'required',
             'message' => 'required'
         ]);    
-
-
+        
         Mail::to($user->firstAdmin())->send(new ContactUs());
 
-        return back()->with('status', 'Message Delivered!');    
+        return back()->with('status', 'Message Delivered!');
     }
 }

@@ -16,6 +16,12 @@
     </div>
     <hr>
 
+    @if (session('status'))
+        <div class="alert alert-success flash-message">
+            {{ session('status') }}
+        </div>
+    @endif
+
     <div class="row">
         @foreach ($posts as $post)
             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 mb-4">
@@ -45,4 +51,3 @@
     <script src="{{ asset('js/imageModal.js') }}"></script>
     <script src="{{ asset('js/emailModal.js') }}"></script>
 @endsection
-
