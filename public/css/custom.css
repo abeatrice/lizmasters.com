@@ -1,3 +1,7 @@
+body {
+    font-family: 'Lora', serif;
+}
+
 i {
     display: inline-flex;
     vertical-align: middle;
